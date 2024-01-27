@@ -50,11 +50,11 @@ export class TabService {
     return await this.tabRepository.save(tab);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<Tab> {
     const tab = await this.tabRepository.findOne({ where: { id } });
     if (!tab) {
       throw new NotFoundException(`Tab with ID ${id} not found`);
     }
-    await this.tabRepository.remove(tab);
+    return await this.tabRepository.remove(tab);
   }
 }

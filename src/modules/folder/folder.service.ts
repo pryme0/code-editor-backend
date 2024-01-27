@@ -36,7 +36,7 @@ export class FolderService {
   async findAll(userId: number): Promise<Folder[]> {
     return await this.folderRepository.find({
       where: { user: { id: userId } },
-      relations: ['user','tabs'],
+      relations: ['tabs'],
     });
   }
 
@@ -60,11 +60,11 @@ export class FolderService {
     return await this.folderRepository.save(folder);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<Folder> {
     const folder = await this.folderRepository.findOne({ where: { id } });
     if (!folder) {
       throw new NotFoundException(`Folder with ID ${id} not found`);
     }
-    await this.folderRepository.remove(folder);
+    return await this.folderRepository.remove(folder);
   }
 }
